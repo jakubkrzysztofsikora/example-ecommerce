@@ -33,3 +33,21 @@ resource "azurerm_app_service" "example" {
   resource_group_name = azurerm_resource_group.rg.name
   app_service_plan_id = azurerm_app_service_plan.example.id
 }
+
+resource "azurerm_application_insights" "example" {
+  name                = "myAppInsights"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  application_type    = "web"
+}
+
+resource "azurerm_app_service" "example" {
+  name                = "example-appservice"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  app_service_plan_id = "example-appserviceplan-id"
+
+  app_settings = {
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.example.instrumentation_key
+  }
+}
