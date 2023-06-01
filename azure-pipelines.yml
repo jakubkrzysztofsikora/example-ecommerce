@@ -25,7 +25,7 @@ steps:
           terraform validate
           terraform apply -auto-approve
 
-- script: dotnet build --configuration $(buildConfiguration)
+- script: cd backend dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
   
 - task: DotNetCoreCLI@2
