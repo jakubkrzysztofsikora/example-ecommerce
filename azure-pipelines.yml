@@ -20,10 +20,8 @@ steps:
     azureSubscription: 'Azure'
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
-
-- script: echo 'Starting Terraform Plan'
-- script: |
-    terraform init
-    terraform validate
-    terraform apply -auto-approve
+    inlineScript: |
+      terraform init
+          terraform validate
+          terraform apply -auto-approve
   
