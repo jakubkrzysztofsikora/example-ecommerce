@@ -5,7 +5,7 @@
 
 trigger:
 - main
-pool: local
+pool: default
 
 variables:
   vmImageName: 'ubuntu-latest'
