@@ -15,6 +15,13 @@ terraform {
     key = "prod.terraform.tfstate"
     access_key = "hR+AEvrgdE5s8ZZtrfRjUqWhIB1VibJd9lQe9f9Dgs1CYtFPHFE4kxlDTjCnp98cYKhD4jibtDdU+AStIhiFCQ=="
   }
+
+  required_providers {
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 2.15.0"
+    }
+  }
 }
 
 resource "azurerm_app_service_plan" "example" {
@@ -82,4 +89,20 @@ resource "azurerm_storage_container" "example" {
   name = "mycontainer"
   storage_account_name = azurerm_storage_account.example.name
   container_access_type = "private"
+}
+
+provider "azuread" {
+  tenant_id = "c0573532-dd78-4025-83bc-5738d8263768"
+}
+
+data "azuread_domains" "example" {
+  only_initial = true
+}
+
+resource "azuread_application" "example" {
+  display_name = "ExampleApp"
+}
+
+resource "azuread_service_principal" "example" {
+  application_id = azuread_application.example.application_id
 }
