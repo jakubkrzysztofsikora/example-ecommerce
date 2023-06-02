@@ -6,6 +6,8 @@ using Backend.InventoryModule;
 using Backend.MockImplementations;
 using Backend.ProductCatalogModule;
 using Microsoft.EntityFrameworkCore;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseIISIntegration();
@@ -13,13 +15,14 @@ IConfiguration config = builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddEnvironmentVariables()
     .Build();
-builder.Services.AddSingleton(config);
-// TODO
+builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddDbContext<BackendDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
