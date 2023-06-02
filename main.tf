@@ -100,7 +100,7 @@ data "azuread_domains" "example" {
 }
 
 resource "azuread_application" "example" {
-  display_name = "ExampleApp"
+  display_name = "myWebApp45321213521"
 }
 
 resource "azuread_service_principal" "example" {
