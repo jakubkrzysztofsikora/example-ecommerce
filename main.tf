@@ -46,7 +46,7 @@ resource "azurerm_application_insights" "example" {
 }
 
 resource "azurerm_sql_server" "example" {
-  name                         = "mySqlServer"
+  name                         = "mysqlserver"
   location                     = azurerm_resource_group.rg.location
   resource_group_name          = azurerm_resource_group.rg.name
   version                      = "12.0"
