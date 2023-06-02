@@ -95,10 +95,6 @@ provider "azuread" {
   tenant_id = "c0573532-dd78-4025-83bc-5738d8263768"
 }
 
-data "azuread_domains" "example" {
-  only_initial = true
-}
-
 resource "azuread_application" "example" {
   display_name = "myWebApp45321213521"
 }
