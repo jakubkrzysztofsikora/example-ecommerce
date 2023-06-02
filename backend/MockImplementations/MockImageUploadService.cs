@@ -1,12 +1,24 @@
 using Backend.ImageUploadModule;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using System.Drawing;
 
 namespace Backend.MockImplementations;
 
 public class MockImageUploadService : IImageStorageService
 {
-    public Task<string> UploadImageAsync(Guid imageId, Stream imageStream)
+   // private readonly IConfiguration _configuration;
+   // public MockImageUploadService(IConfiguration config)
+   // {
+   //         _configuration = config;
+   // }
+    public async Task<string> UploadImageAsync(Guid imageId, Stream imageStream)
     {
-        imageStream.Dispose();
-        return Task.FromResult("https://i.pinimg.com/originals/4e/02/f7/4e02f7d306773c0b6a0a4e58ceea2174.jpg");
+        var blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=mystorageaccount2712156;AccountKey=MjU0hIurewGF3xWzPtPAiTzVHa3ESsQbCnVNO7uiBew7EveEurQTfqUByD3/Iymp0npwq1vvcF/6+AStgaoN+g==;EndpointSuffix=core.windows.net");
+        BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mycontainer");
+
+        BlobClient blobClient = containerClient.GetBlobClient($"{imageId.ToString()}.jpg");
+        await blobClient.UploadAsync(imageStream, true);
+        return imageId.ToString() + ".jpg";
     }
 }
